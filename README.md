@@ -23,6 +23,7 @@ $ sudo apt-get install -qq libfluidsynth-dev build-essential libasound2-dev libj
 5. Install packages and other magenta with version 1.3.3 because the model can only work with tensorflow 1.x which is compatible with this version of magenta
 ```
 $ pip3.7 install -qU pyfluidsynth
+$ pip3.7 install -qU tensorflow-datasets=3.2.1
 $ pip3.7 install -qU magenta==1.3.3
 ```
 6. Download checkpoints and source midi files

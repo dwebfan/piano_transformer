@@ -15,11 +15,18 @@ $ source piano_transformer/bin/activate
 $ cd piano_transformer
 ```
 4. Install required packages. 
+
 Linux
 ```
 $ sudo apt update
 $ sudo apt-get install -qq libfluidsynth-dev build-essential libasound2-dev libjack-dev
 ```
+
+Mac OS
+```
+$ brew install fluid-synth
+```
+
 5. Install packages and other magenta with version 1.3.3 because the model can only work with tensorflow 1.x which is compatible with this version of magenta
 ```
 $ pip3.7 install -qU pyfluidsynth

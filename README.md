@@ -31,7 +31,7 @@ $ brew install fluid-synth
 ```
 $ pip3.7 install -qU pyfluidsynth
 $ pip3.7 install -qU note_seq
-$ pip3.7 install -qU tensorflow-datasets=3.2.1
+$ pip3.7 install -qU tensorflow-datasets==3.2.1
 $ pip3.7 install -qU magenta==1.3.3
 ```
 6. Download checkpoints and source midi files

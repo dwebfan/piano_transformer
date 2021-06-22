@@ -3,8 +3,6 @@
 #@markdown Also install and import Python dependencies needed
 #@markdown for running the Transformer models.
 
-%tensorflow_version 1.x
-
 print('Copying Salamander piano SoundFont (via https://sites.google.com/site/soundfonts4u) from GCS...')
 
 print('Installing dependencies...')
@@ -16,8 +14,6 @@ print('Importing libraries...')
 import numpy as np
 import os
 import tensorflow.compat.v1 as tf
-
-from google.colab import files
 
 from tensor2tensor import models
 from tensor2tensor import problems
@@ -37,15 +33,16 @@ print('Done!')
 #@title Definitions
 #@markdown Define a few constants and helper functions.
 
-SF2_PATH = '/content/Yamaha-C5-Salamander-JNv5.1.sf2'
+SF2_PATH = './content/Yamaha-C5-Salamander-JNv5.1.sf2'
 SAMPLE_RATE = 16000
 
 # Upload a MIDI file and convert to NoteSequence.
 def upload_midi():
-  data = list(files.upload().values())
-  if len(data) > 1:
-    print('Multiple files uploaded; using only one.')
-  return note_seq.midi_to_note_sequence(data[0])
+  #data = list(files.upload().values())
+  #if len(data) > 1:
+   # print('Multiple files uploaded; using only one.')
+  #return note_seq.midi_to_note_sequence(data[0])
+  return note_seq.midi_file_to_note_sequence("./content/c_major_arpeggio.mid")
 
 # Decode a list of IDs.
 def decode(ids, encoder):
@@ -178,10 +175,10 @@ else:
   melody_ns = note_seq.Melody(events).to_sequence(qpm=150)
 
 # Play and plot the melody.
-note_seq.play_sequence(
+'''note_seq.play_sequence(
     melody_ns,
     synth=note_seq.fluidsynth, sample_rate=SAMPLE_RATE, sf2_path=SF2_PATH)
-note_seq.plot_sequence(melody_ns)
+note_seq.plot_sequence(melody_ns)'''
 
 
 #@title Generate Accompaniment for Melody
@@ -198,17 +195,17 @@ midi_filename = decode(
     encoder=melody_conditioned_encoders['targets'])
 accompaniment_ns = note_seq.midi_file_to_note_sequence(midi_filename)
 
-# Play and plot.
-note_seq.play_sequence(
+# Play and plot. 
+'''note_seq.play_sequence(
     accompaniment_ns,
     synth=note_seq.fluidsynth, sample_rate=SAMPLE_RATE, sf2_path=SF2_PATH)
-note_seq.plot_sequence(accompaniment_ns)
+note_seq.plot_sequence(accompaniment_ns) '''
 
 #@title Download Accompaniment as MIDI
 #@markdown Download accompaniment performance as MIDI (optional).
 
 note_seq.sequence_proto_to_midi_file(
     accompaniment_ns, '/tmp/accompaniment.mid')
-files.download('/tmp/accompaniment.mid')
+#files.download('/tmp/accompaniment.mid')
   
 

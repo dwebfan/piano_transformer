@@ -347,6 +347,9 @@ melodies = {
     ]
 }
 
+def upload_midi(filepath):
+    
+
 melody = 'Twinkle Twinkle Little Star'  #@param ['Mary Had a Little Lamb', 'Row Row Row Your Boat', 'Twinkle Twinkle Little Star', 'Upload your own!']
 
 if melody == 'Upload your own!':

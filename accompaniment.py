@@ -24,6 +24,8 @@ from tensor2tensor.utils import trainer_lib
 from magenta.models.score2perf import score2perf
 import note_seq
 
+import sys
+
 tf.disable_v2_behavior()
 
 print('Done!')
@@ -42,7 +44,7 @@ def upload_midi():
   #if len(data) > 1:
    # print('Multiple files uploaded; using only one.')
   #return note_seq.midi_to_note_sequence(data[0])
-  return note_seq.midi_file_to_note_sequence("./content/c_major_arpeggio.mid")
+  return note_seq.midi_file_to_note_sequence(sys.argv[1])
 
 # Decode a list of IDs.
 def decode(ids, encoder):
@@ -57,7 +59,7 @@ def decode(ids, encoder):
 
 model_name = 'transformer'
 hparams_set = 'transformer_tpu'
-ckpt_path = 'gs://magentadata/models/music_transformer/checkpoints/melody_conditioned_model_16.ckpt'
+ckpt_path = './checkpoints/melody_conditioned_model_16.ckpt'
 
 class MelodyToPianoPerformanceProblem(score2perf.AbsoluteMelody2PerfProblem):
   @property
@@ -193,19 +195,10 @@ sample_ids = next(melody_conditioned_samples)['outputs']
 midi_filename = decode(
     sample_ids,
     encoder=melody_conditioned_encoders['targets'])
-accompaniment_ns = note_seq.midi_file_to_note_sequence(midi_filename)
 
-# Play and plot. 
-'''note_seq.play_sequence(
-    accompaniment_ns,
-    synth=note_seq.fluidsynth, sample_rate=SAMPLE_RATE, sf2_path=SF2_PATH)
-note_seq.plot_sequence(accompaniment_ns) '''
+os.rename(midi_filename, sys.argv[2])
 
-#@title Download Accompaniment as MIDI
-#@markdown Download accompaniment performance as MIDI (optional).
+#accompaniment_ns = note_seq.midi_file_to_note_sequence(midi_filename)
 
-note_seq.sequence_proto_to_midi_file(
-    accompaniment_ns, '/tmp/accompaniment.mid')
-#files.download('/tmp/accompaniment.mid')
   
 
